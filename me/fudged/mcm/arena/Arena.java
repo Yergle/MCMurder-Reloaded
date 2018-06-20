@@ -6,12 +6,14 @@ import java.util.UUID;
 
 import org.bukkit.Location;
 
+import me.fudged.mcm.storage.MurderConfig;
+
 public class Arena {
 	
 	private String name;
 	private List<UUID> players;
 	private Location lobbySpawn, arenaSpawn;
-	private Integer maxPlayers;
+	private Integer maxPlayers = MurderConfig.MAXPLAYERS;
 	private UUID murderer, detective;
 	private GameState gameState;
 	
@@ -24,7 +26,6 @@ public class Arena {
 		this.players = new ArrayList<>();
 	//	this.lobbySpawn = Grab from config
 	//	this.arenaSpawn = Grab from config
-	//	this.maxPlayers = Grab from config
 		this.gameState = GameState.LOBBY;
 	}
 	
@@ -33,7 +34,6 @@ public class Arena {
 		this.players = new ArrayList<>();
 		this.lobbySpawn = location;
 		this.arenaSpawn = location;
-	//	this.maxPlayers = Grab from config
 		this.gameState = GameState.LOBBY;
 	}
 	
@@ -81,8 +81,15 @@ public class Arena {
 		return maxPlayers;
 	}
 	
-	public void setMaxPlayers(int integer){
-		this.maxPlayers = integer;
+	public String getRole(UUID uuid){
+		if(this.getMurderer() == uuid){
+			return "Murderer";
+		}
+		if(this.getDetective() == uuid){
+			return "Detective";
+		}
+		return "Bystander";
+		
 	}
 	
 }

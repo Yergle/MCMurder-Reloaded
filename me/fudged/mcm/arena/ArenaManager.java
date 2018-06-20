@@ -23,15 +23,15 @@ public class ArenaManager {
 		
 	}
 	
-	public void createArena(String name, Location location){
+	public void createArena(String name, Location location){ // Used to create an arena in game
 		arenas.add(new Arena(name, location));
 	}
 	
-	public void createArena(String name){
+	public void createArena(String name){ // Create the arena from storage
 		arenas.add(new Arena(name));
 	}
 	
-	public Arena getArena(String name){
+	public Arena getArena(String name){ // Find the arena by the arena's name
 		for(Arena arena : arenas){
 			if(arena.getName().equalsIgnoreCase(name)){
 				return arena;
@@ -40,7 +40,7 @@ public class ArenaManager {
 		return null;
 	}
 	
-	public Arena getArena(UUID uuid){
+	public Arena getArena(UUID uuid){ // Find the arena a player is in 
 		for(Arena arena : arenas){
 			if(arena.getPlayers().contains(uuid)){
 				return arena;
@@ -49,7 +49,7 @@ public class ArenaManager {
 		return null;
 	}
 	
-	public List<Arena> getArenas(){
+	public List<Arena> getArenas(){ // Get a list of all the arenas
 		return arenas;
 	}
 

@@ -5,11 +5,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.fudged.mcm.arena.ArenaManager;
 import me.fudged.mcm.listener.MapProtection;
+import me.fudged.mcm.storage.PlayerData;
 
 public class MCMurder extends JavaPlugin {
 	
 	private static MCMurder instance;
 	private ArenaManager arenaManager;
+	private PlayerData playerData;
 	
 	public void onEnable(){
 		instance = this;
@@ -31,6 +33,10 @@ public class MCMurder extends JavaPlugin {
 	
 	public ArenaManager getArenaManager(){
 		return arenaManager;
+	}
+	
+	public PlayerData getPlayerData(){
+		return playerData;
 	}
 
 }
