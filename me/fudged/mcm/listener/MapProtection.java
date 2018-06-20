@@ -11,14 +11,14 @@ public class MapProtection implements Listener {
 	
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event){
-		if(MCMurder.getInst().getArenaManager().getArena(event.getPlayer().getUniqueId()) != null){
+		if(MCMurder.getInst().getArenaManager().getArena(event.getPlayer().getUniqueId()) != null){ // Checks if player is in a game
 			event.setCancelled(true);
 		}
 	}
 	
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent event){
-		if(MCMurder.getInst().getArenaManager().getArena(event.getPlayer().getUniqueId()) != null){
+		if(MCMurder.getInst().getArenaManager().getArena(event.getPlayer().getUniqueId()) != null){ // Checks if a player is in a game
 			event.setCancelled(true);
 		}
 	}
