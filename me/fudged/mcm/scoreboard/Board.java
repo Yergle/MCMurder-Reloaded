@@ -16,14 +16,14 @@ public class Board {
 	
 	private Scoreboard board;
 	private Objective obj;
-	private Arena a;
-	private Score role, timeLeft, playersLeft, arena, spacer, spacer1, spacer2;
+	private Arena arena;
+	private Score role, timeLeft, playersLeft, arenaName, spacer, spacer1, spacer2;
 	
-	public Board(Arena a){
-		this.a = a;
+	public Board(Arena arena){
+		this.arena = arena;
 		
 		board = Bukkit.getServer().getScoreboardManager().getNewScoreboard();
-		obj = board.registerNewObjective(a.getName(), "dummy");
+		obj = board.registerNewObjective(arena.getName(), "dummy");
 		obj.setDisplayName(MurderConfig.BOARDHEADER);
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 		
@@ -32,18 +32,19 @@ public class Board {
 		spacer2 = obj.getScore(ChatColor.RED + "  ");
 		
 		this.loadScoreboard();
+		
 	}
 	
 	public void loadScoreboard(){
-		for(UUID uu : a.getPlayers()){
-			role = obj.getScore(MurderConfig.PRIMARY + "Role: " + MurderConfig.SECONDARY + a.getRole(uu));
+		for(UUID uu : arena.getActivePlayers()){
+			role = obj.getScore(MurderConfig.PRIMARY + "Role: " + MurderConfig.SECONDARY + arena.getRole(uu));
 			timeLeft = obj.getScore(MurderConfig.PRIMARY + "Time Remaining: " + MurderConfig.GAMETIME);
-			arena = obj.getScore(MurderConfig.PRIMARY + "Arena: " + MurderConfig.SECONDARY + a.getName());
-			playersLeft = obj.getScore(MurderConfig.PRIMARY + "Players Alive: " + MurderConfig.SECONDARY + a.getPlayers().size());
+			arenaName = obj.getScore(MurderConfig.PRIMARY + "Arena: " + MurderConfig.SECONDARY + arena.getName());
+			playersLeft = obj.getScore(MurderConfig.PRIMARY + "Players Alive: " + MurderConfig.SECONDARY + arena.getActivePlayers().size());
 			
 			role.setScore(1);
 			spacer.setScore(2);
-			arena.setScore(3);
+			arenaName.setScore(3);
 			spacer1.setScore(4);
 			playersLeft.setScore(5);
 			spacer2.setScore(6);
@@ -54,9 +55,9 @@ public class Board {
 	}
 	
 	public void tick(String time){
-		for(UUID uu : a.getPlayers()){
-			role = obj.getScore(MurderConfig.PRIMARY + "Role: " + MurderConfig.SECONDARY + a.getRole(uu));
-			playersLeft = obj.getScore(MurderConfig.PRIMARY + "Players Alive: " + MurderConfig.SECONDARY + a.getPlayers().size());
+		for(UUID uu : arena.getActivePlayers()){
+			role = obj.getScore(MurderConfig.PRIMARY + "Role: " + MurderConfig.SECONDARY + arena.getRole(uu));
+			playersLeft = obj.getScore(MurderConfig.PRIMARY + "Players Alive: " + MurderConfig.SECONDARY + arena.getActivePlayers().size());
 			timeLeft = obj.getScore(MurderConfig.PRIMARY + "Time Remaining: " + MurderConfig.SECONDARY + time);
 			
 			for(String s : board.getEntries()){
@@ -65,7 +66,7 @@ public class Board {
 			
 			role.setScore(1);
 			spacer.setScore(2);
-			arena.setScore(3);
+			arenaName.setScore(3);
 			spacer1.setScore(4);
 			playersLeft.setScore(5);
 			spacer2.setScore(6);
@@ -73,6 +74,10 @@ public class Board {
 			
 			Bukkit.getServer().getPlayer(uu).setScoreboard(board);
 		}
+	}
+	
+	public Scoreboard getScoreboard(){
+		return board;
 	}
 	
 }

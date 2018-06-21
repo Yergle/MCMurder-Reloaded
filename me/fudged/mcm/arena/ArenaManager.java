@@ -42,7 +42,7 @@ public class ArenaManager {
 	
 	public Arena getArena(UUID uuid){ // Find the arena a player is in 
 		for(Arena arena : arenas){
-			if(arena.getPlayers().contains(uuid)){
+			if(arena.getActivePlayers().contains(uuid)){
 				return arena;
 			}
 		}

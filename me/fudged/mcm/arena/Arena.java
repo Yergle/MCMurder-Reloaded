@@ -4,37 +4,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
+import me.fudged.mcm.MCMurder;
 import me.fudged.mcm.storage.MurderConfig;
 
 public class Arena {
 	
 	private String name;
-	private List<UUID> players;
+	private List<UUID> activePlayers, allPlayers;
 	private Location lobbySpawn, arenaSpawn;
 	private Integer maxPlayers = MurderConfig.MAXPLAYERS;
 	private UUID murderer, detective;
 	private GameState gameState;
 	
 	public enum GameState {
-		LOBBY, COUNTING_DOWN, STARTED, DISABLED;
+		WAITING, LOBBY, STARTED, DISABLED;
 	}
 
 	public Arena(String name) { //  Used for creating arena from storage file arena.yml
 		this.name = name;
-		this.players = new ArrayList<>();
-	//	this.lobbySpawn = Grab from config
-	//	this.arenaSpawn = Grab from config
-		this.gameState = GameState.LOBBY;
+		this.activePlayers = new ArrayList<>();
+		this.allPlayers = new ArrayList<>();
+		this.lobbySpawn = getLocationFromStorage("arenas." + name + ".lobbySpawn");
+		this.arenaSpawn = getLocationFromStorage("arenas." + name + ".arenaSpawn");
+		this.gameState = GameState.WAITING;
 	}
 	
 	public Arena(String name, Location location){ // Used for creating arena in game based on player location
 		this.name = name;
-		this.players = new ArrayList<>();
+		this.activePlayers = new ArrayList<>();
+		this.allPlayers = new ArrayList<>();
 		this.lobbySpawn = location;
 		this.arenaSpawn = location;
-		this.gameState = GameState.LOBBY;
+		this.gameState = GameState.WAITING;
 	}
 	
 	public String getName(){
@@ -65,8 +69,12 @@ public class Arena {
 		this.arenaSpawn = location;
 	}
 	
-	public List<UUID> getPlayers(){
-		return players;
+	public List<UUID> getActivePlayers(){
+		return activePlayers;
+	}
+	
+	public List<UUID> getAllPlayers(){
+		return allPlayers;
 	}
 	
 	public UUID getMurderer(){
@@ -90,6 +98,13 @@ public class Arena {
 		}
 		return "Bystander";
 		
+	}
+	
+	public Location getLocationFromStorage(String path){
+		String[] split = MCMurder.getInst().getArenaFile().getConfig().get(path).toString().split(";");
+		
+		return new Location(Bukkit.getWorld(split[0]), Double.parseDouble(split[1]), Double.parseDouble(split[2]), Double.parseDouble(split[3]),
+				Float.parseFloat(split[4]), Float.parseFloat(split[5]));
 	}
 	
 }
