@@ -12,10 +12,12 @@ public class MCMurder extends JavaPlugin {
 	private static MCMurder instance;
 	private ArenaManager arenaManager;
 	private PlayerData playerData;
+	private MurderFile arenaFile;
 	
 	public void onEnable(){
 		instance = this;
 		
+		arenaFile = new MurderFile("arenas");
 		arenaManager = new ArenaManager();
 		
 		registerEvents();
@@ -37,6 +39,10 @@ public class MCMurder extends JavaPlugin {
 	
 	public PlayerData getPlayerData(){
 		return playerData;
+	}
+	
+	public MurderFile getArenaFile() {
+		return this.arenaFile;
 	}
 
 }
