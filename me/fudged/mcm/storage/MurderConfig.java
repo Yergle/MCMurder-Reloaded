@@ -15,8 +15,8 @@ public class MurderConfig {
 	public static int COUNTDOWNTIME = 15;
 	public static String PREFIX = ChatColor.RED + "" + ChatColor.BOLD + "MCMurder";
 	public static String BOARDHEADER = ChatColor.RED + "MCMurder";
-	public static ChatColor PRIMARY = ChatColor.DARK_RED;
-	public static ChatColor SECONDARY = ChatColor.GRAY;
+	public static ChatColor PRIMARY = ChatColor.GRAY;
+	public static ChatColor SECONDARY = ChatColor.RED;
 	public static boolean USEBOARD = true;
 
 	public MurderConfig(MCMurder murder){

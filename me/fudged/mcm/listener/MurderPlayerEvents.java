@@ -23,14 +23,6 @@ public class MurderPlayerEvents implements Listener {
 			return;
 		}
 		
-		//Check if theres enough space for the player to join
-		if(arena.getActivePlayers().size() >= arena.getMaxPlayers()){ // Arena is full
-			player.sendMessage(MurderConfig.PREFIX + MurderConfig.PRIMARY + " " + arena.getName() + MurderConfig.SECONDARY + " is currently full" );
-			
-			event.setCancelled(true);
-			return;
-		}
-		
 		arena.getActivePlayers().add(player.getUniqueId());
 		arena.getAllPlayers().add(player.getUniqueId());
 		MCMurder.getInst().getPlayerData().savePlayerData(player);
@@ -39,6 +31,9 @@ public class MurderPlayerEvents implements Listener {
 			Bukkit.getServer().getPlayer(uuid).sendMessage(MurderConfig.PREFIX + MurderConfig.PRIMARY + " " + player.getName() + 
 					MurderConfig.SECONDARY + " has joined the arena " + MurderConfig.PRIMARY + "(" + arena.getActivePlayers().size() + "/" + arena.getMaxPlayers() + ")");
 		}
+		
+		player.teleport(arena.getLobbySpawn());
+		player.getInventory().clear();
 		
 	}
 

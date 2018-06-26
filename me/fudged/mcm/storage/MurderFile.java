@@ -35,6 +35,8 @@ public class MurderFile {
 			}
 			
 			this.config = YamlConfiguration.loadConfiguration(file);
+			
+			this.config.createSection("arenas");
 		}
 	}
 	

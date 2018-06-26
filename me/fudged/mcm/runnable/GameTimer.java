@@ -1,5 +1,7 @@
 package me.fudged.mcm.runnable;
 
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
@@ -49,6 +51,12 @@ public class GameTimer extends BukkitRunnable {
 		
 
 		timeLeft--;
+		
+		if(timeLeft % 60 == 0){ // Update players of minutes remaining 
+			for(UUID uuid : arena.getActivePlayers()){
+				Bukkit.getServer().getPlayer(uuid).sendMessage(MurderConfig.PREFIX + MurderConfig.PRIMARY + " " + timeLeft / 60 + MurderConfig.SECONDARY + " minutes remaining");
+			}
+		}
 
 		if(MurderConfig.USEBOARD){
 			board.tick(formatInt(timeLeft));

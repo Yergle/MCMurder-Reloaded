@@ -4,7 +4,10 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.fudged.mcm.arena.ArenaManager;
+import me.fudged.mcm.commands.CommandManager;
 import me.fudged.mcm.listener.MapProtection;
+import me.fudged.mcm.listener.MurderArenaEvents;
+import me.fudged.mcm.listener.MurderPlayerEvents;
 import me.fudged.mcm.storage.MurderFile;
 import me.fudged.mcm.storage.PlayerData;
 
@@ -16,6 +19,7 @@ public class MCMurder extends JavaPlugin {
 	
 	private ArenaManager arenaManager;
 	private PlayerData playerData;
+	private CommandManager commandManager;
 	
 	public void onEnable(){
 		instance = this;
@@ -23,20 +27,31 @@ public class MCMurder extends JavaPlugin {
 		loadFiles();
 		
 		arenaManager = new ArenaManager();
+		playerData = new PlayerData();
 		
 		registerEvents();
+		setupCommands();
 	}
 	
 	public void registerEvents(){
 		PluginManager manager = getServer().getPluginManager();
 		
 		manager.registerEvents(new MapProtection(), this);
+		manager.registerEvents(new MurderArenaEvents(), this);
+		manager.registerEvents(new MurderPlayerEvents(), this);
 	}
 	
 	public void loadFiles(){
 		saveDefaultConfig();
 		
 		arenaFile = new MurderFile("arenas");
+	}
+	
+	public void setupCommands(){
+		commandManager = new CommandManager(); 
+		
+		getCommand("murder").setExecutor(commandManager);
+		getCommand("mcmadmin").setExecutor(commandManager);
 	}
 	
 	public static MCMurder getInst(){
