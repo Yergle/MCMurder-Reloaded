@@ -5,7 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.fudged.mcm.arena.ArenaManager;
 import me.fudged.mcm.commands.CommandManager;
-import me.fudged.mcm.listener.MapProtection;
+import me.fudged.mcm.listener.BukkitEvents;
 import me.fudged.mcm.listener.MurderArenaEvents;
 import me.fudged.mcm.listener.MurderPlayerEvents;
 import me.fudged.mcm.storage.MurderFile;
@@ -36,7 +36,7 @@ public class MCMurder extends JavaPlugin {
 	public void registerEvents(){
 		PluginManager manager = getServer().getPluginManager();
 		
-		manager.registerEvents(new MapProtection(), this);
+		manager.registerEvents(new BukkitEvents(), this);
 		manager.registerEvents(new MurderArenaEvents(), this);
 		manager.registerEvents(new MurderPlayerEvents(), this);
 	}

@@ -22,7 +22,6 @@ public class MurderArenaEvents implements Listener {
 		if(event.isCancelled()){
 			return;
 		}
-		
 		Location loc = event.getPlayer().getLocation();
 		
 		MCMurder.getInst().getArenaManager().createArena(event.getName(), loc); // Create the arena in game

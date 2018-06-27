@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 
 import me.fudged.mcm.commands.admincmds.Create;
 import me.fudged.mcm.commands.playercmds.Join;
+import me.fudged.mcm.commands.playercmds.Leave;
 import me.fudged.mcm.storage.MurderConfig;
 
 
@@ -20,6 +21,7 @@ public class CommandManager implements CommandExecutor {
 	
 	public CommandManager(){
 		playerCommands.add(new Join());
+		playerCommands.add(new Leave());
 		
 		adminCommands.add(new Create());
 	}
@@ -58,7 +60,7 @@ public class CommandManager implements CommandExecutor {
 		if(cmd.getName().equalsIgnoreCase("mcmadmin")){ // Admin command management 
 			if(args.length == 0){
 				for(AdminCommand ac : adminCommands){
-					p.sendMessage(MurderConfig.PREFIX + MurderConfig.PRIMARY + " /murder " + ac.getUsage() + " " + MurderConfig.SECONDARY + ac.getMessage());
+					p.sendMessage(MurderConfig.PREFIX + MurderConfig.PRIMARY + " /mcmadmin " + ac.getUsage() + " " + MurderConfig.SECONDARY + ac.getMessage());
 				}
 				return true;
 			}

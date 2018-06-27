@@ -9,7 +9,9 @@ import org.bukkit.event.Listener;
 
 import me.fudged.mcm.MCMurder;
 import me.fudged.mcm.arena.Arena;
+import me.fudged.mcm.events.ArenaEndEvent;
 import me.fudged.mcm.events.PlayerJoinArenaEvent;
+import me.fudged.mcm.events.PlayerLeaveArenaEvent;
 import me.fudged.mcm.storage.MurderConfig;
 
 public class MurderPlayerEvents implements Listener {
@@ -34,6 +36,32 @@ public class MurderPlayerEvents implements Listener {
 		
 		player.teleport(arena.getLobbySpawn());
 		player.getInventory().clear();
+		
+	}
+	
+	@EventHandler
+	public void onPlayerLeaveArena(PlayerLeaveArenaEvent event){
+		Arena arena = event.getArena();
+		Player player = event.getPlayer();
+		
+		if(event.isCancelled()){
+			return;
+		}
+		
+		arena.getActivePlayers().remove(player.getUniqueId());
+		arena.getAllPlayers().remove(player.getUniqueId());
+		arena.sendMessage("A player has left the game. " + MurderConfig.SECONDARY + arena.getActivePlayers().size() + MurderConfig.PREFIX + " players remain");
+		
+		if(MCMurder.getInst().getPlayerData().hasPlayerData(player)){
+			MCMurder.getInst().getPlayerData().restorePlayerData(player);
+		} else {
+			Bukkit.getLogger().info("An error has occured with restoring the inventory of user " + player.getUniqueId().toString());
+			player.sendMessage(MurderConfig.PREFIX + MurderConfig.PRIMARY + " An error has occured restoring your inventory. Contact an admin as soon as possible");
+		}
+		
+		if(arena.getActivePlayers().isEmpty()){
+			Bukkit.getServer().getPluginManager().callEvent(new ArenaEndEvent(arena));
+		}
 		
 	}
 

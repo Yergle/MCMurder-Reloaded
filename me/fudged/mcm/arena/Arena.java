@@ -107,4 +107,10 @@ public class Arena {
 				Float.parseFloat(split[4]), Float.parseFloat(split[5]));
 	}
 	
+	public void sendMessage(String message){
+		for(UUID uuid : this.getActivePlayers()){
+			Bukkit.getServer().getPlayer(uuid).sendMessage(MurderConfig.PREFIX + MurderConfig.PRIMARY + " ");
+		}
+	}
+	
 }
