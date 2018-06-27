@@ -32,6 +32,8 @@ import net.minecraft.server.v1_12_R1.WorldServer;
 
 public class FakePlayer {
 
+	// Maybe change packet sending to only murder players?
+	
 	EntityPlayer fakePlayer;
 	
 	public FakePlayer(Player player, Location location) {
@@ -51,7 +53,7 @@ public class FakePlayer {
 		
 		PacketPlayOutPlayerInfo packetPlayerInfo = new PacketPlayOutPlayerInfo(EnumPlayerInfoAction.ADD_PLAYER, fakePlayer);
 		PacketPlayOutNamedEntitySpawn packetSpawnEntity = new PacketPlayOutNamedEntitySpawn(fakePlayer);
-		PacketHandler.sendPacketToAll(packetPlayerInfo);
+		PacketHandler.sendPacketToAll(packetPlayerInfo); 
 		PacketHandler.sendPacketToAll(packetSpawnEntity);
 	}
 	
