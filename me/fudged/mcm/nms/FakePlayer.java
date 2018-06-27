@@ -73,4 +73,8 @@ public class FakePlayer {
 		// Removes (kills) the fake player.
 		fakePlayer.die();
 	}
+	
+	public EntityPlayer getFakePlayer() {
+		return fakePlayer;
+	}
 }
