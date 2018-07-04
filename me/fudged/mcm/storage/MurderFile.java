@@ -33,11 +33,11 @@ public class MurderFile {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-			this.config = YamlConfiguration.loadConfiguration(file);
-			
-			this.config.createSection("arenas");
 		}
+		
+		this.config = YamlConfiguration.loadConfiguration(file);
+			
+		this.config.createSection("arenas");
 	}
 	
 	// This allows you to access all the regular config methods.
